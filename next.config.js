@@ -6,7 +6,7 @@ const nextConfig = {
     SHOPIFY_ACCESS_TOKEN: "4492ff534a5e9d1bb71daf9f152643dc",
   },
   images: {
-    domains: ['assets.example.com'],
+    domains: ['cdn.shopify.com'],
   },
 }
 
