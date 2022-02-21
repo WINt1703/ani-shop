@@ -1,0 +1,7 @@
+.frameInfo {
+    border: rgb(221, 255, 0) solid 2px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    color: orange;
+}

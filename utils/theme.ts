@@ -13,6 +13,17 @@ export default createTheme({
         }
     },
     components: {
+        MuiButton: {
+          defaultProps: {
+              sx: {
+                  maxHeight: 50,
+                  padding: "10px 20px",
+              },
+              variant: "outlined",
+              disableRipple: true,
+              color: "warning",
+          },
+        },
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
