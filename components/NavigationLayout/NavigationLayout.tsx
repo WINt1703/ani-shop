@@ -1,11 +1,16 @@
 import React from 'react';
-import {Badge, Drawer, Grid, IconButton, InputBase, Paper} from "@mui/material";
+import {Badge, Grid, IconButton, InputBase, Paper} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Image from 'next/image';
 import Logo from '../../public/logo.svg';
+import {useSelector} from "react-redux";
+import Cart from "../../slices/cart/models/Cart";
+import {cartSelector} from "../../slices/cart";
 
 const NavigationLayout = ({ children }: any) => {
+    const cart = useSelector<{}, Cart>(cartSelector)
+
     return (
         <Grid margin={1}>
             <Paper
@@ -27,7 +32,7 @@ const NavigationLayout = ({ children }: any) => {
                 </IconButton>
 
                 <IconButton aria-label="cart">
-                    <Badge badgeContent={45} color="info">
+                    <Badge badgeContent={cart.productCount} color="info">
                         <ShoppingBasketIcon color={"success"} />
                     </Badge>
                 </IconButton>

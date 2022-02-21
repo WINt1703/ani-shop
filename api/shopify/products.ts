@@ -1,20 +1,6 @@
 import client from "./index";
 import {Connection} from "./connection";
-
-export interface Product {
-    id: string,
-    title: string,
-    description: string,
-    images: Connection<ProductImage>,
-}
-
-export interface ProductImage {
-    altText: string,
-    height: number,
-    id: string,
-    url: string,
-    width: number,
-}
+import Product from "./models/Product";
 
 export async function getProducts(count: number = 5): Promise<Array<Product>> {
     const QUERY = `{
@@ -22,8 +8,18 @@ export async function getProducts(count: number = 5): Promise<Array<Product>> {
       edges {
         node {
           id
-          title
+          title        
           description
+          variants(first: 1) {
+           edges {
+             node {
+               priceV2 {
+                 amount
+                 currencyCode
+               }
+             }
+           }
+          } 
           images(first: 1) {
             edges {
              node {
