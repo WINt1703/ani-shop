@@ -1,4 +1,4 @@
-import Product from "../../../api/shopify/models/Product";
+import Product from "./product";
 
 interface CartProduct {
     sum: number,

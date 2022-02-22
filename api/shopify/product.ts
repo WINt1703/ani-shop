@@ -1,5 +1,5 @@
 import client from "./index";
-import Product from "./models/Product";
+import Product from "../../interfaces/product";
 
 export async function getProductById(id: string): Promise<Product> {
     const QUERY = `{

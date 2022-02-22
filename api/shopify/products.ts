@@ -1,6 +1,6 @@
 import client from "./index";
 import {Connection} from "./connection";
-import Product from "./models/Product";
+import Product from "../../interfaces/product";
 
 export async function getProducts(count: number = 5): Promise<Array<Product>> {
     const QUERY = `{

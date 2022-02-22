@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import Cart from "./models/Cart";
-import Product from "../../api/shopify/models/Product";
+import Cart from "../../interfaces/cart";
+import Product from "../../interfaces/product";
 
 function getInitialState(): Cart {
     return {

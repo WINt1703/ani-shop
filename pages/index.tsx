@@ -3,7 +3,7 @@ import {getProducts} from "../api/shopify/products";
 import {NextPage} from "next";
 import {Grid, Theme, useMediaQuery} from "@mui/material";
 import ProductsInfo from "../components/ProductInfo/ProductsInfo";
-import Product from "../api/shopify/models/Product";
+import Product from "../interfaces/product";
 
 type HomeProps = {
     products: Array<Product>,

@@ -1,6 +1,6 @@
-import {Connection} from "../connection";
-import ProductImage from "./ProductImage";
-import ProductVariants from "./ProductVariants";
+import {Connection} from "../api/shopify/connection";
+import ProductImage from "./product-image";
+import ProductVariants from "./product-variants";
 
 interface Product {
     id: string,

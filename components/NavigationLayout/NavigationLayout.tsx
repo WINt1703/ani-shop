@@ -5,7 +5,7 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Image from 'next/image';
 import Logo from '../../public/logo.svg';
 import {useSelector} from "react-redux";
-import Cart from "../../slices/cart/models/Cart";
+import Cart from "../../interfaces/cart";
 import {cartSelector} from "../../slices/cart";
 
 const NavigationLayout = ({ children }: any) => {

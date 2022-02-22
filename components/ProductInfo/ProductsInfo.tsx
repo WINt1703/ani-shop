@@ -4,7 +4,7 @@ import {Grid, IconButton, Typography} from "@mui/material";
 import styles from "../../styles/ProductInfo.module.css"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Link from "next/link"
-import Product from "../../api/shopify/models/Product";
+import Product from "../../interfaces/product";
 import {useDispatch} from "react-redux";
 import {addProduct} from "../../slices/cart";
 

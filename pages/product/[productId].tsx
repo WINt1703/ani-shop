@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {NextPage, NextPageContext} from "next";
 import {getProductById} from "../../api/shopify/product";
-import Product from "../../api/shopify/models/Product";
+import Product from "../../interfaces/product";
 import {Button, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
 import Image from "next/image"
 import styles from "../../styles/product.module.css"
