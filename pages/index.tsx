@@ -2,7 +2,7 @@ import React from 'react';
 import {getProducts} from "../api/shopify/products";
 import {NextPage} from "next";
 import {Grid, Theme, useMediaQuery} from "@mui/material";
-import ProductsInfo from "../components/ProductInfo/ProductsInfo";
+import ProductsInfo from "../components/ProductInfo";
 import Product from "../interfaces/product";
 
 type HomeProps = {

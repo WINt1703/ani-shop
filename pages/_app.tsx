@@ -2,7 +2,7 @@ import React from 'react';
 import "../styles/a.css"
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../utils/theme";
-import NavigationLayout from "../components/NavigationLayout/NavigationLayout";
+import NavigationLayout from "../components/NavigationLayout";
 import {Provider} from "react-redux";
 import rootStore from "../stores/root"
 
