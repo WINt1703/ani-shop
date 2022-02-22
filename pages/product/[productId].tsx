@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {NextPage, NextPageContext} from "next";
 import {getProductById} from "../../api/shopify/product";
 import Product from "../../api/shopify/models/Product";
-import {Button, Grid, Tab, Tabs, Typography} from "@mui/material";
+import {Button, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
 import Image from "next/image"
 import styles from "../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -30,17 +30,19 @@ const Product: NextPage<ProductProps> = ({product}) => {
     const addToCartHandler = () => {
         dispatch(addProduct(product))
     }
-
+    const md = useMediaQuery<Theme>(theme => theme.breakpoints.down("md"))
 
     return (
         <Grid m={3}>
-            <Typography color={"orange"} variant={"h3"}>
+            <Typography color={"orange"} textAlign={md ? "center" : undefined} variant={"h3"}>
                 { product.title }
             </Typography>
 
-            <Grid container mt={2}>
-                <Grid item>
-                    <Image width={480} height={550} alt={product.images.edges[indexImage].node.altText}
+            <Grid container justifyContent={md ? "center" : undefined}  mt={2}>
+                <Grid container={md} maxWidth={480}  direction={md ? "column" : undefined} item>
+                    <Image width={480}
+                           height={550}
+                           alt={product.images.edges[indexImage].node.altText}
                            src={product.images.edges[indexImage].node.url}/>
 
                     <Tabs variant={"scrollable"}
@@ -66,9 +68,15 @@ const Product: NextPage<ProductProps> = ({product}) => {
                 <Grid item
                       ml={5}
                       container
+                      my={md ? 3 : 0}
                       direction={"column"}
-                      xs>
-                    <Grid direction={"row"} alignItems={"center"} display={"flex"} className={styles.frameInfo}>
+                      md={"auto"}
+                      lg>
+                    <Grid direction={"row"}
+                          alignItems={"center"}
+                          justifyContent={md ? "center" : undefined}
+                          display={"flex"}
+                          className={styles.frameInfo}>
                         <Typography mr={3} variant={"h5"}>
                             Price { product.variants.edges[0].node.priceV2.amount } { product.variants.edges[0].node.priceV2.currencyCode }
                         </Typography>
