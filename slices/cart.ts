@@ -1,41 +1,35 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import Cart from "../interfaces/cart";
-import Product from "../interfaces/product";
-
-function getInitialState(): Cart {
-    return {
-        products: [],
-        productCount: 0,
-        totalSum: 0,
-    }
-}
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {createCart, addCartLine} from "../api/next/cart";
 
 const slice = createSlice({
     name: "cart",
-    initialState: getInitialState(),
+    initialState: null,
     reducers: {
-        addProduct: (state, dispatch: PayloadAction<Product>) => {
-            const productCart = state.products.find(p => p.product.id === dispatch.payload.id)
-            const newProducts = state.products.filter(p => p.product.id !== productCart?.product.id)
-
-            if (productCart)
-                newProducts.push({
-                    count: productCart.count + 1,
-                    sum: productCart.sum + dispatch.payload.variants.edges[0].node.priceV2.amount,
-                    product: dispatch.payload,
-                })
-
-            return {
-                totalSum: state.totalSum + dispatch.payload.variants.edges[0].node.priceV2.amount,
-                productCount: state.productCount + 1,
-                products: newProducts,
-            }
-        }
     },
+    extraReducers: (builder) => {
+        builder.addCase<any, PayloadAction<Cart>>(addProduct.fulfilled, (state, action) => action.payload as any)
+    }
 })
 
-export const { addProduct } = slice.actions
+export const addProduct = createAsyncThunk(
+    "cart/addProduct",
+    async (product: Product, thunkAPI) => {
+        const cart  = cartSelector(thunkAPI.getState())
 
-export const cartSelector = (state: any) => state.cart
+        if (cart) {
+            return await addCartLine(cart.id, [
+                ...cart.lines.edges.map(e => ({ merchandiseId: e.node.merchandise.id })),
+                {
+                    merchandiseId: product.variants.edges[0].node.id
+                }
+            ])
+        }
+
+        return await createCart(product.variants.edges[0].node.id)
+    }
+)
+
+export const cartSelector = (state: any): Cart | null => state.cart
 
 export default slice.reducer

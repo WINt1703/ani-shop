@@ -5,8 +5,8 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Image from 'next/image';
 import Logo from '../../public/logo.svg';
 import {useSelector} from "react-redux";
-import Cart from "../../interfaces/cart";
 import {cartSelector} from "../../slices/cart";
+import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 const NavigationLayout = ({ children }: any) => {
     const cart = useSelector<{}, Cart>(cartSelector)
@@ -32,7 +32,7 @@ const NavigationLayout = ({ children }: any) => {
                 </IconButton>
 
                 <IconButton aria-label="cart">
-                    <Badge badgeContent={cart.productCount} color="info">
+                    <Badge badgeContent={0} color="info">
                         <ShoppingBasketIcon color={"success"} />
                     </Badge>
                 </IconButton>

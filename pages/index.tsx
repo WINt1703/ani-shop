@@ -3,7 +3,7 @@ import {getProducts} from "../api/shopify/products";
 import {NextPage} from "next";
 import {Grid, Theme, useMediaQuery} from "@mui/material";
 import ProductsInfo from "../components/ProductInfo";
-import Product from "../interfaces/product";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 type HomeProps = {
     products: Array<Product>,

@@ -4,9 +4,10 @@ import {Grid, IconButton, Typography} from "@mui/material";
 import styles from "../../styles/ProductInfo.module.css"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Link from "next/link"
-import Product from "../../interfaces/product";
 import {useDispatch} from "react-redux";
 import {addProduct} from "../../slices/cart";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import Image from "next/image"
 
 type ProductsInfoProps = {
     product: Product,
@@ -33,10 +34,10 @@ const ProductsInfo: NextPage<ProductsInfoProps> = ({ product }) => {
                     </IconButton>
                 </Grid>
 
-                <img alt={product.images.edges[0].node.altText}
-                     height={250}
-                     width={200}
-                     src={product.images.edges[0].node.url}/>
+                <Image alt={product.images.edges[0].node.altText || ""}
+                       height={250}
+                       width={200}
+                       src={product.images.edges[0].node.url}/>
             </Grid>
 
             <Link passHref href={"product/[productId]"} as={`product/${product.id.split('/').slice(-1)[0]}`}>

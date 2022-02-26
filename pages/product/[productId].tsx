@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {NextPage, NextPageContext} from "next";
 import {getProductById} from "../../api/shopify/product";
-import Product from "../../interfaces/product";
 import {Button, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
 import Image from "next/image"
 import styles from "../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {useDispatch} from "react-redux";
 import {addProduct} from "../../slices/cart";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 type ProductProps = {
     product: Product
@@ -42,7 +42,7 @@ const Product: NextPage<ProductProps> = ({product}) => {
                 <Grid container={md} maxWidth={480}  direction={md ? "column" : undefined} item>
                     <Image width={480}
                            height={550}
-                           alt={product.images.edges[indexImage].node.altText}
+                           alt={product.images.edges[indexImage].node.altText!}
                            src={product.images.edges[indexImage].node.url}/>
 
                     <Tabs variant={"scrollable"}
@@ -59,7 +59,7 @@ const Product: NextPage<ProductProps> = ({product}) => {
                                 <Tab value={i}
                                      key={i}
                                      icon={
-                                         <Image height={50} width={50} alt={e.node.altText} src={e.node.url}/>
+                                         <Image height={50} width={50} alt={e.node.altText!} src={e.node.url}/>
                                      } />
                             ))
                         }

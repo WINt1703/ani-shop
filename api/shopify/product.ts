@@ -1,5 +1,5 @@
 import client from "./index";
-import Product from "../../interfaces/product";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 export async function getProductById(id: string): Promise<Product> {
     const QUERY = `{
@@ -10,6 +10,7 @@ export async function getProductById(id: string): Promise<Product> {
               variants(first: 1) {
                 edges {
                   node {
+                    id
                     priceV2 {
                       amount
                       currencyCode

@@ -1,6 +1,5 @@
 import client from "./index";
-import {Connection} from "./connection";
-import Product from "../../interfaces/product";
+import {Product, ProductConnection} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 export async function getProducts(count: number = 5): Promise<Array<Product>> {
     const QUERY = `{
@@ -13,6 +12,7 @@ export async function getProducts(count: number = 5): Promise<Array<Product>> {
           variants(first: 1) {
            edges {
              node {
+               id
                priceV2 {
                  amount
                  currencyCode
@@ -35,5 +35,5 @@ export async function getProducts(count: number = 5): Promise<Array<Product>> {
 
     return await client.query({
         data: QUERY,
-    }).then(res => ((res.body as any).data.products as Connection<Product>).edges.map(e => e.node))
+    }).then(res => ((res.body as any).data.products as ProductConnection).edges.map(e => e.node))
 }

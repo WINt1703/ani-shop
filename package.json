@@ -14,12 +14,16 @@
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.2",
     "@reduxjs/toolkit": "^1.7.2",
+    "@shopify/hydrogen": "^0.11.0",
     "@shopify/shopify-api": "^2.1.0",
     "@types/react-redux": "^7.1.22",
+    "axios": "^0.26.0",
     "next": "12.1.0",
+    "next-transpile-modules": "^9.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
     "@types/node": "17.0.18",
