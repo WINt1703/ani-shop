@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {NextPage, NextPageContext} from "next";
 import {getProductById} from "../../api/shopify/product";
-import {Button, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+import {CircularProgress, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
 import Image from "next/image"
 import styles from "../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {useDispatch, useSelector} from "react-redux";
-import {addProduct, cartSelector, updateProduct} from "../../slices/cart";
+import {cartSelector, setCart} from "../../slices/cart";
 import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {addProductOrCreateCart, updateLineOrCreateCart} from "../../utils/cart";
 
 type ProductProps = {
     product: Product
@@ -24,16 +26,23 @@ export async function getServerSideProps({ query }: NextPageContext) {
 const Product: NextPage<ProductProps> = ({product}) => {
     const dispatch = useDispatch()
     const cart = useSelector<{}, Cart | null>(cartSelector)
+    const [isFetching, setIsFetching] = useState(false)
     const [indexImage, setIndexImage] = useState<number>(0)
+
     const changedImageIndexHandler = (event: React.SyntheticEvent, newValue: number) => {
         setIndexImage(newValue);
     };
-    const addToCartHandler = () => {
+    const addToCartHandler = async () => {
         if (cart?.lines.edges.some(e => e.node.merchandise.product.id === product.id)) {
-            dispatch(updateProduct({ product: product, quantity: 1 }))
+            setIsFetching(true)
+            dispatch(setCart(await updateLineOrCreateCart({ product: product, quantity: 1 }, cart)))
+            setIsFetching(false)
         }
-        else
-            dispatch(addProduct(product))
+        else {
+            setIsFetching(true)
+            dispatch(setCart(await addProductOrCreateCart(product, cart)))
+            setIsFetching(false)
+        }
     }
     const md = useMediaQuery<Theme>(theme => theme.breakpoints.down("md"))
 
@@ -86,10 +95,25 @@ const Product: NextPage<ProductProps> = ({product}) => {
                             Price { product.variants.edges[0].node.priceV2.amount } { product.variants.edges[0].node.priceV2.currencyCode }
                         </Typography>
 
-                        <Button onClick={addToCartHandler}
-                                startIcon={ <AddShoppingCartIcon/> }>
-                            In cart
-                        </Button>
+                        <LoadingButton onClick={addToCartHandler}
+                                       loadingIndicator={<>
+                                           <Grid display={"flex"}
+                                                 alignItems={"center"}
+                                                 direction={"row"}
+                                                 sx={{ color: "#a77dff" }}>
+                                               <CircularProgress size={20} sx={{ color: "#a77dff" }} />
+                                               <Typography textTransform={"none"}
+                                                           m={0}
+                                                           marginLeft={1}
+                                                           mt={.5}>Adding</Typography>
+                                           </Grid>
+                                       </>}
+                                       loading={isFetching}
+                                       variant={"outlined"}
+                                       loadingPosition={"start"}
+                                       startIcon={ <AddShoppingCartIcon/> }>
+                            To cart
+                        </LoadingButton>
                     </Grid>
                 </Grid>
             </Grid>
