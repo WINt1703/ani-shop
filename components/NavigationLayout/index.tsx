@@ -7,9 +7,10 @@ import Logo from '../../public/logo.svg';
 import {useSelector} from "react-redux";
 import {cartSelector} from "../../slices/cart";
 import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import Link from "next/link"
 
 const NavigationLayout = ({ children }: any) => {
-    const cart = useSelector<{}, Cart>(cartSelector)
+    const cart = useSelector<{}, Cart | null>(cartSelector)
 
     return (
         <Grid margin={1}>
@@ -17,10 +18,12 @@ const NavigationLayout = ({ children }: any) => {
                 component="form"
                 sx={{ p: '2px 4px', boxShadow: 0, display: 'flex', alignItems: 'center'}}
             >
-                <Image width={20}
-                       height={20}
-                       alt={"logo"}
-                       src={Logo}/>
+                <Link href={"/"} passHref>
+                    <Image width={20}
+                           height={20}
+                           alt={"logo"}
+                           src={Logo}/>
+                </Link>
 
                 <InputBase
                     sx={{ ml: 1, flex: 1 }}
@@ -32,13 +35,12 @@ const NavigationLayout = ({ children }: any) => {
                 </IconButton>
 
                 <IconButton aria-label="cart">
-                    <Badge badgeContent={0} color="info">
+                    <Badge badgeContent={cart?.lines.edges.length} color="info">
                         <ShoppingBasketIcon color={"success"} />
                     </Badge>
                 </IconButton>
             </Paper>
             <Grid container marginTop={1}>
-
                 { children }
             </Grid>
         </Grid>

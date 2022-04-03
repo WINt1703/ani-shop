@@ -5,9 +5,9 @@ import {Button, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/ma
 import Image from "next/image"
 import styles from "../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import {useDispatch} from "react-redux";
-import {addProduct} from "../../slices/cart";
-import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {useDispatch, useSelector} from "react-redux";
+import {addProduct, cartSelector, updateProduct} from "../../slices/cart";
+import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 type ProductProps = {
     product: Product
@@ -23,12 +23,17 @@ export async function getServerSideProps({ query }: NextPageContext) {
 
 const Product: NextPage<ProductProps> = ({product}) => {
     const dispatch = useDispatch()
+    const cart = useSelector<{}, Cart | null>(cartSelector)
     const [indexImage, setIndexImage] = useState<number>(0)
     const changedImageIndexHandler = (event: React.SyntheticEvent, newValue: number) => {
         setIndexImage(newValue);
     };
     const addToCartHandler = () => {
-        dispatch(addProduct(product))
+        if (cart?.lines.edges.some(e => e.node.merchandise.product.id === product.id)) {
+            dispatch(updateProduct({ product: product, quantity: 1 }))
+        }
+        else
+            dispatch(addProduct(product))
     }
     const md = useMediaQuery<Theme>(theme => theme.breakpoints.down("md"))
 

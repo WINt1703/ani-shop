@@ -1,6 +1,6 @@
 import client from "./index";
 import {Cart} from "@shopify/hydrogen";
-import {CartLineInput} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {CartLineInput, CartLineUpdateInput} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 export async function createCart(merchandiseId: string): Promise<Cart> {
     const QUERY = `
@@ -16,7 +16,9 @@ export async function createCart(merchandiseId: string): Promise<Cart> {
       attributes: { key: "cart_attribute", value: "This is a cart attribute" }
     }
   ) {
-    ${CART_FIELDS}
+    cart {
+        ${CART_FIELDS}
+    }
   }
 }`
 
@@ -26,9 +28,16 @@ export async function createCart(merchandiseId: string): Promise<Cart> {
 }
 
 export async function addCartLine(cartId: string, lines: CartLineInput[]) {
-    const QUERY = `mutation cartLinesAdd {
-  cartLinesAdd(cartId: "${cartId}", lines: [${lines.map(l => `{ merchandiseId: "${l.merchandiseId}" },`)}]) {
-    ${CART_FIELDS}
+    const variables = {
+        cartId: `gid://shopify/Cart/${cartId}`,
+        lines: lines,
+    }
+
+    const QUERY = `mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart {
+      ${CART_FIELDS}
+    }
     userErrors {
       field
       message
@@ -36,22 +45,63 @@ export async function addCartLine(cartId: string, lines: CartLineInput[]) {
   }
 }`
 
-    console.log(QUERY)
+    return await client.query({
+        data: {
+            query: QUERY,
+            variables: variables,
+        },
+    }).then(res => res.body)
+}
+
+export async function getCartById(cardId: string) {
+    const QUERY = `
+        {
+            cart(id: "gid://shopify/Cart/${cardId}") {
+                ${CART_FIELDS}
+            }
+        }`
+
     return await client.query({
         data: QUERY,
     }).then(res => res.body)
 }
 
-const CART_FIELDS = `
+export async function updateCartLine(cartId: string, lines: CartLineUpdateInput[]) {
+    const variables = {
+        cartId: `gid://shopify/Cart/${cartId}`,
+        lines: lines,
+    }
+
+    const QUERY = `mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+  cartLinesUpdate(cartId: $cartId, lines: $lines) {
     cart {
+      ${CART_FIELDS}
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}`
+
+    return await client.query({
+        data: {
+            query: QUERY,
+            variables: variables,
+        },
+    }).then(res => res.body)
+}
+
+ const CART_FIELDS = `    
       id
       lines(first: 10) {
         edges {
           node {
             id
+            quantity
             merchandise {
               ... on ProductVariant {
-                id
+                id                
                 product {
                  id
                  title
@@ -79,6 +129,5 @@ const CART_FIELDS = `
           amount
           currencyCode
         }
-      }
-    }
+      }    
 `

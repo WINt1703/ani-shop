@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "../styles/a.css"
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../utils/theme";
 import NavigationLayout from "../components/NavigationLayout";
-import {Provider} from "react-redux";
+import {Provider, useSelector} from "react-redux";
 import rootStore from "../stores/root"
 
 const App = ({ Component, pageProps }: any) => {

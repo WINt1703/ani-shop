@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    SHOPIFY_DOMAIN: "ani-shop-ua.myshopify.com",
-    SHOPIFY_ACCESS_TOKEN: "4492ff534a5e9d1bb71daf9f152643dc",
+    SHOPIFY_DOMAIN: "hydrogen-preview.myshopify.com",
+    SHOPIFY_ACCESS_TOKEN: "3b580e70970c4528da70c98e097c2fa0",
   },
   images: {
     domains: ['cdn.shopify.com'],
