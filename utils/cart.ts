@@ -1,5 +1,5 @@
 import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
-import {addCartLine, createCart, getCartById, updateCartLine} from "../api/next/cart"
+import {addCartLine, createCart, getCartById, updateCartLine, removeCartLines} from "../api/next/cart"
 import {getCookie, setCookies} from "cookies-next";
 
 export async function updateLineOrCreateCart(line: { product: Product, quantity: number }, cart: Cart | null): Promise<Cart> {
@@ -43,4 +43,10 @@ export async function getSavedCart(): Promise<Cart | null> {
         return await getCartById(cookie as string)
 
     return null
+}
+
+export async function purgeCartLines(cart: Cart, lineIds: string[]) {
+    const cartId = cart.id.split("/").slice(-1)[0]
+
+    return await removeCartLines(cartId, lineIds)
 }

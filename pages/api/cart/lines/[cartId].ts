@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {addCartLine, updateCartLine} from "../../../../api/shopify/cart";
+import {addCartLine, removeCartLines, updateCartLine} from "../../../../api/shopify/cart";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -8,6 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break
         case "POST":
             res.json(await updateCartLine(req.query.cartId as string, req.body.lines))
+            break
+        case "PATCH":
+            res.json(await removeCartLines(req.query.cartId as string, req.body.lineIds))
             break
     }
 }

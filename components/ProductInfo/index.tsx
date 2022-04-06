@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NextPage} from "next";
-import {Grid, IconButton, Typography} from "@mui/material";
+import {Grid, CircularProgress, Typography} from "@mui/material";
 import styles from "../../styles/ProductInfo.module.css"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Link from "next/link"
-import {useDispatch} from "react-redux";
-import {addProduct} from "../../slices/cart";
-import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {useDispatch, useSelector} from "react-redux";
+import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 import Image from "next/image"
+import {cartSelector, setCart} from "../../slices/cart";
+import {addProductOrCreateCart, updateLineOrCreateCart} from "../../utils/cart";
+import { LoadingButton } from '@mui/lab';
 
 type ProductsInfoProps = {
     product: Product,
@@ -15,8 +17,19 @@ type ProductsInfoProps = {
 
 const ProductsInfo: NextPage<ProductsInfoProps> = ({ product }) => {
     const dispatch = useDispatch()
-    const addToCartHandler = () => {
-        dispatch(addProduct(product))
+    const cart = useSelector<{}, Cart | null>(cartSelector)
+    const [isFetching, setIsFetching] = useState<boolean>(false)
+    const addToCartHandler = async () => {
+        if (cart?.lines.edges.some(e => e.node.merchandise.product.id === product.id)) {
+            setIsFetching(true)
+            dispatch(setCart(await updateLineOrCreateCart({ product: product, quantity: 1 }, cart)))
+            setIsFetching(false)
+        }
+        else {
+            setIsFetching(true)
+            dispatch(setCart(await addProductOrCreateCart(product, cart)))
+            setIsFetching(false)
+        }
     }
 
     return (
@@ -29,9 +42,24 @@ const ProductsInfo: NextPage<ProductsInfoProps> = ({ product }) => {
               justifyContent={"center"}>
             <Grid position={"relative"}>
                 <Grid className={styles.productOverlay}>
-                    <IconButton sx={{ width: 80, height: 80 }} onClick={addToCartHandler}>
-                        <AddShoppingCartIcon color={"warning"} fontSize={"large"} />
-                    </IconButton>
+                    <LoadingButton sx={{ width: 80, height: 80 }}
+                                   loading={isFetching}
+                                   loadingPosition={"start"}
+                                   startIcon={<AddShoppingCartIcon sx={{ width: 30, height: 30 }}
+                                                                   color={"warning"} />}
+                                   loadingIndicator={
+                                       <Grid display={"flex"}
+                                             alignItems={"center"}
+                                             direction={"row"}
+                                             sx={{ color: "#b38eff" }}>
+                                           <CircularProgress size={20} sx={{ color: "#b38eff" }} />
+                                           <Typography textTransform={"none"}
+                                                       m={0}
+                                                       marginLeft={1}
+                                                       mt={.5}>Adding</Typography>
+                                       </Grid>
+                                   }
+                                   onClick={addToCartHandler}/>
                 </Grid>
 
                 <Image alt={product.images.edges[0].node.altText || ""}

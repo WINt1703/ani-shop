@@ -1,6 +1,5 @@
 import client from "./index";
-import {Cart} from "@shopify/hydrogen";
-import {CartLineInput, CartLineUpdateInput} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {Cart, CartLineInput, CartLineUpdateInput} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 export async function createCart(merchandiseId: string): Promise<Cart> {
     const QUERY = `
@@ -92,6 +91,32 @@ export async function updateCartLine(cartId: string, lines: CartLineUpdateInput[
     }).then(res => res.body)
 }
 
+export async function removeCartLines(cartId: string, lineIds: Array<string>) {
+    const variables = {
+        cartId: `gid://shopify/Cart/${cartId}`,
+        lineIds: lineIds,
+    }
+
+    const QUERY = `mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      ${CART_FIELDS}
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}`
+
+    return await client.query({
+        data: {
+            query: QUERY,
+            variables: variables,
+        },
+    }).then(res => res.body)
+}
+
  const CART_FIELDS = `    
       id
       lines(first: 10) {
@@ -101,7 +126,11 @@ export async function updateCartLine(cartId: string, lines: CartLineUpdateInput[
             quantity
             merchandise {
               ... on ProductVariant {
-                id                
+                id   
+                image {
+                 src
+                 altText
+                }     
                 product {
                  id
                  title

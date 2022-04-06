@@ -15,6 +15,11 @@ export async function updateCartLine(cartId: string, lines: CartLineUpdateInput[
         .then(res => res.data.data.cartLinesUpdate.cart)
 }
 
+export async function removeCartLines(cartId: string, lineIds: string[]): Promise<Cart> {
+    return await axios.patch(`/api/cart/lines/${cartId}`, { lineIds: lineIds })
+        .then(res => res.data.data.cartLinesRemove.cart)
+}
+
 export async function getCartById(cardId: string): Promise<Cart> {
     return await axios.get(`/api/cart/${cardId}`)
         .then(res => res.data.data.cart)

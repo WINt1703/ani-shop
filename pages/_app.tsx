@@ -1,16 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import "../styles/a.css"
+import "../styles/text.css"
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../utils/theme";
 import NavigationLayout from "../components/NavigationLayout";
-import {Provider, useSelector} from "react-redux";
+import {Provider} from "react-redux";
 import rootStore from "../stores/root"
 
-const App = ({ Component, pageProps }: any) => {
+const App = ({Component, pageProps}: any) => {
     return (
         <Provider store={rootStore}>
             <ThemeProvider theme={theme}>
-                <CssBaseline />
+                <CssBaseline/>
                 <NavigationLayout>
                     <Component {...pageProps}/>
                 </NavigationLayout>
