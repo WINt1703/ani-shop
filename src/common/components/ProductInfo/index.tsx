@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {NextPage} from "next";
 import {Grid, CircularProgress, Typography} from "@mui/material";
-import styles from "../../styles/ProductInfo.module.css"
+import styles from "../../../../styles/ProductInfo.module.css"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Link from "next/link"
 import {useDispatch, useSelector} from "react-redux";
 import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 import Image from "next/image"
-import {cartSelector, setCart} from "../../slices/cart";
+import {cartSelector, setCart} from "../../../module/shopify/slices/cart";
 import {addProductOrCreateCart, updateLineOrCreateCart} from "../../utils/cart";
 import { LoadingButton } from '@mui/lab';
 

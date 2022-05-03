@@ -1,11 +1,11 @@
 import React from 'react';
-import "../styles/a.css"
-import "../styles/text.css"
+import "../../styles/a.css"
+import "../../styles/text.css"
 import {CssBaseline, ThemeProvider} from "@mui/material";
-import theme from "../utils/theme";
-import NavigationLayout from "../components/NavigationLayout";
+import theme from "../common/utils/theme";
+import NavigationLayout from "../common/components/NavigationLayout";
 import {Provider} from "react-redux";
-import rootStore from "../stores/root"
+import rootStore from "../common/stores/root"
 
 const App = ({Component, pageProps}: any) => {
     return (

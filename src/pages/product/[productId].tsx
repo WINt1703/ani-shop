@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {NextPage, NextPageContext} from "next";
-import {getProductById} from "../../api/shopify/product";
+import {getProductById} from "../../module/shopify/api/product";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {CircularProgress, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
 import Image from "next/image"
-import styles from "../../styles/product.module.css"
+import styles from "../../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {useDispatch, useSelector} from "react-redux";
-import {cartSelector, setCart} from "../../slices/cart";
+import {cartSelector, setCart} from "../../module/shopify/slices/cart";
 import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
-import {addProductOrCreateCart, updateLineOrCreateCart} from "../../utils/cart";
+import {addProductOrCreateCart, updateLineOrCreateCart} from "../../common/utils/cart";
 
 type ProductProps = {
     product: Product

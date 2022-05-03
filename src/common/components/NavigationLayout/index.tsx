@@ -3,11 +3,11 @@ import {Badge, Drawer, Grid, IconButton, InputBase, Paper, Typography} from "@mu
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Image from 'next/image';
-import Logo from '../../public/logo.svg';
+import Logo from '../../../../public/logo.svg';
 import {useSelector} from "react-redux";
-import {cartSelector} from "../../slices/cart";
+import {cartSelector} from "../../../module/shopify/slices/cart";
 import Link from "next/link"
-import CartMenu from "../CartMenu/index"
+import CartMenu from "../CartMenu"
 import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 const NavigationLayout = ({ children }: any) => {
