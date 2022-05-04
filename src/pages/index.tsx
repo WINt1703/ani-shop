@@ -1,7 +1,7 @@
 import React from 'react';
 import {getProducts} from "../modules/shopify/api/products";
 import {NextPage} from "next";
-import {Grid, Theme, useMediaQuery} from "@mui/material";
+import {Grid} from "@mui/material";
 import ProductsInfo from "../common/components/ProductInfo/ProductInfo";
 import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
@@ -20,10 +20,10 @@ export async function getServerSideProps() {
 }
 
 const Index: NextPage<HomeProps> = ({ products }) => {
-    const sm = useMediaQuery<Theme>(theme => theme.breakpoints.down("sm"))
-
     return (
-        <Grid display={"flex"} mx={sm ? "auto" : 0} direction={sm ? "column" : "row"}>
+        <Grid container
+              alignItems={"center"}
+              flexWrap={"wrap"}>
             {
                 products.map((p, i) => (
                     <ProductsInfo key={i} product={p} />
