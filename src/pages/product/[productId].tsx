@@ -8,6 +8,7 @@ import styles from "../../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 import useCart from "../../modules/shopify/hook/useCart";
+import SeoLayout from "../../common/components/SeoLayout/SeoLayout";
 
 type ProductProps = {
     product: Product
@@ -34,86 +35,88 @@ const Product: NextPage<ProductProps> = ({product}) => {
     }
 
     return (
-        <Grid m={3}>
-            <Typography color={"orange"} textAlign={md ? "center" : undefined} variant={"h3"}>
-                { product.title }
-            </Typography>
+        <SeoLayout title={product.title} metaDescription={product.description}>
+            <Grid m={3}>
+                <Typography color={"orange"} textAlign={md ? "center" : undefined} variant={"h3"}>
+                    { product.title }
+                </Typography>
 
-            <Grid container justifyContent={md ? "center" : undefined}  mt={2}>
-                <Grid container={md} maxWidth={480}  direction={md ? "column" : undefined} item>
-                    <Image width={480}
-                           height={550}
-                           alt={product.images.edges[indexImage].node.altText!}
-                           src={product.images.edges[indexImage].node.url}/>
+                <Grid container justifyContent={md ? "center" : undefined}  mt={2}>
+                    <Grid container={md} maxWidth={480}  direction={md ? "column" : undefined} item>
+                        <Image width={480}
+                               height={550}
+                               alt={product.images.edges[indexImage].node.altText!}
+                               src={product.images.edges[indexImage].node.url}/>
 
-                    <Tabs variant={"scrollable"}
-                          sx={{ maxWidth: 480 }}
-                          TabIndicatorProps={{
-                              style: {
-                                  background: "#ff4d00",
-                              }
-                          }}
-                          value={indexImage}
-                          onChange={changedImageIndexHandler}>
-                        {
-                            product.images.edges.map((e, i) => (
-                                <Tab value={i}
-                                     key={i}
-                                     icon={
-                                         <Image height={50} width={50} alt={e.node.altText!} src={e.node.url}/>
-                                     } />
-                            ))
-                        }
-                    </Tabs>
-                </Grid>
-                <Grid item
-                      ml={5}
-                      container
-                      my={md ? 3 : 0}
-                      direction={"column"}
-                      md={"auto"}
-                      lg>
-                    <Grid direction={"row"}
-                          alignItems={"center"}
-                          justifyContent={md ? "center" : undefined}
-                          display={"flex"}
-                          className={styles.frameInfo}>
-                        <Typography mr={3} variant={"h5"}>
-                            Price { product.variants.edges[0].node.priceV2.amount } { product.variants.edges[0].node.priceV2.currencyCode }
-                        </Typography>
+                        <Tabs variant={"scrollable"}
+                              sx={{ maxWidth: 480 }}
+                              TabIndicatorProps={{
+                                  style: {
+                                      background: "#ff4d00",
+                                  }
+                              }}
+                              value={indexImage}
+                              onChange={changedImageIndexHandler}>
+                            {
+                                product.images.edges.map((e, i) => (
+                                    <Tab value={i}
+                                         key={i}
+                                         icon={
+                                             <Image height={50} width={50} alt={e.node.altText!} src={e.node.url}/>
+                                         } />
+                                ))
+                            }
+                        </Tabs>
+                    </Grid>
+                    <Grid item
+                          ml={5}
+                          container
+                          my={md ? 3 : 0}
+                          direction={"column"}
+                          md={"auto"}
+                          lg>
+                        <Grid direction={"row"}
+                              alignItems={"center"}
+                              justifyContent={md ? "center" : undefined}
+                              display={"flex"}
+                              className={styles.frameInfo}>
+                            <Typography mr={3} variant={"h5"}>
+                                Price { product.variants.edges[0].node.priceV2.amount } { product.variants.edges[0].node.priceV2.currencyCode }
+                            </Typography>
 
-                        <LoadingButton onClick={addToCartHandler}
-                                       loadingIndicator={<>
-                                           <Grid display={"flex"}
-                                                 alignItems={"center"}
-                                                 direction={"row"}
-                                                 sx={{ color: "#a77dff" }}>
-                                               <CircularProgress size={20} sx={{ color: "#a77dff" }} />
-                                               <Typography textTransform={"none"}
-                                                           m={0}
-                                                           marginLeft={1}
-                                                           mt={.5}>Adding</Typography>
-                                           </Grid>
-                                       </>}
-                                       loading={isFetching}
-                                       variant={"outlined"}
-                                       loadingPosition={"start"}
-                                       startIcon={ <AddShoppingCartIcon/> }>
-                            To cart
-                        </LoadingButton>
+                            <LoadingButton onClick={addToCartHandler}
+                                           loadingIndicator={<>
+                                               <Grid display={"flex"}
+                                                     alignItems={"center"}
+                                                     direction={"row"}
+                                                     sx={{ color: "#a77dff" }}>
+                                                   <CircularProgress size={20} sx={{ color: "#a77dff" }} />
+                                                   <Typography textTransform={"none"}
+                                                               m={0}
+                                                               marginLeft={1}
+                                                               mt={.5}>Adding</Typography>
+                                               </Grid>
+                                           </>}
+                                           loading={isFetching}
+                                           variant={"outlined"}
+                                           loadingPosition={"start"}
+                                           startIcon={ <AddShoppingCartIcon/> }>
+                                To cart
+                            </LoadingButton>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
 
-            <Typography variant={"h4"}
-                        color={"greenyellow"}
-                        mt={3}>
-                Description
-            </Typography>
-            <Typography color={"greenyellow"}>
-                { product.description }
-            </Typography>
-        </Grid>
+                <Typography variant={"h4"}
+                            color={"greenyellow"}
+                            mt={3}>
+                    Description
+                </Typography>
+                <Typography color={"greenyellow"}>
+                    { product.description }
+                </Typography>
+            </Grid>
+        </SeoLayout>
     );
 };
 
