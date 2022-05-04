@@ -11,7 +11,7 @@ import CartMenu from "../CartMenu/CartMenu"
 import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 const NavigationLayout = ({ children }: any) => {
-    const cart = useSelector<{}, Cart | null>(cartSelector)
+    const cart = useSelector(cartSelector)
     const [showCart, setShowCart] = useState<boolean>(false)
 
     return (

@@ -17,7 +17,7 @@ type ProductsInfoProps = {
 
 const ProductsInfo: NextPage<ProductsInfoProps> = ({ product }) => {
     const dispatch = useDispatch()
-    const cart = useSelector<{}, Cart | null>(cartSelector)
+    const cart = useSelector(cartSelector)
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const addToCartHandler = async () => {
         if (cart?.lines.edges.some(e => e.node.merchandise.product.id === product.id)) {

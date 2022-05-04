@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 import {removeCookies} from "cookies-next";
+import RootStore from "../../../common/types/rootStore";
 
 function getInitialState(): Cart | null {
     return null
@@ -20,6 +21,6 @@ const slice = createSlice({
 
 export const {clearCart, setCart} = slice.actions
 
-export const cartSelector = (state: any): Cart | null => state.cart
+export const cartSelector = (state: RootStore): Cart | null => state.cart
 
 export default slice.reducer

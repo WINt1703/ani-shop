@@ -25,7 +25,7 @@ export async function getServerSideProps({ query }: NextPageContext) {
 
 const Product: NextPage<ProductProps> = ({product}) => {
     const dispatch = useDispatch()
-    const cart = useSelector<{}, Cart | null>(cartSelector)
+    const cart = useSelector(cartSelector)
     const [isFetching, setIsFetching] = useState(false)
     const [indexImage, setIndexImage] = useState<number>(0)
 

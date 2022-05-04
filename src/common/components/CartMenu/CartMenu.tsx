@@ -15,7 +15,7 @@ type CartMenuProps = {
 }
 
 const CartMenu: NextPage<CartMenuProps> = ({ onClose }) => {
-    const cart = useSelector<{}, Cart | null>(cartSelector)
+    const cart = useSelector(cartSelector)
     const dispatch = useDispatch()
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const changeCountHandler = async (product: Product, quantity: number) => {

@@ -6,8 +6,9 @@ import theme from "../common/utils/theme";
 import NavigationLayout from "../common/components/NavigationLayout/NavigatonLayout";
 import {Provider} from "react-redux";
 import rootStore from "../common/stores/root"
+import {AppProps} from "next/app"
 
-const App = ({Component, pageProps}: any) => {
+const App = ({Component, pageProps}: AppProps) => {
     return (
         <Provider store={rootStore}>
             <ThemeProvider theme={theme}>

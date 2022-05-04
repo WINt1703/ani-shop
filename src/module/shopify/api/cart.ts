@@ -1,7 +1,7 @@
 import client from "./index";
-import {Cart, CartLineInput, CartLineUpdateInput} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {CartLineInput, CartLineUpdateInput} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
-export async function createCart(merchandiseId: string): Promise<Cart> {
+export async function createCart(merchandiseId: string) {
     const QUERY = `
     mutation {
   cartCreate(
@@ -23,7 +23,7 @@ export async function createCart(merchandiseId: string): Promise<Cart> {
 
     return await client.query({
         data: QUERY,
-    }).then(res => (res.body as any))
+    }).then(res => res.body)
 }
 
 export async function addCartLine(cartId: string, lines: CartLineInput[]) {
