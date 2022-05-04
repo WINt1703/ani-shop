@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
-import {cartSelector, setCart} from "../../../module/shopify/slices/cart";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {cartSelector, setCart} from "../../../modules/shopify/slices/cart";
 import {Typography, Grid, Button, IconButton, CircularProgress} from "@mui/material";
 import Image from "next/image"
 import CloseIcon from '@mui/icons-material/Close';

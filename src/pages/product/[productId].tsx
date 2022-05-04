@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {NextPage, NextPageContext} from "next";
-import {getProductById} from "../../module/shopify/api/product";
+import {getProductById} from "../../modules/shopify/api/product";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {CircularProgress, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} from "@mui/material";
 import Image from "next/image"
 import styles from "../../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
-import useCart from "../../module/shopify/hook/useCart";
+import useCart from "../../modules/shopify/hook/useCart";
 
 type ProductProps = {
     product: Product
@@ -25,7 +25,7 @@ const Product: NextPage<ProductProps> = ({product}) => {
     const { addToCart, isFetching } = useCart()
     const md = useMediaQuery<Theme>(theme => theme.breakpoints.down("md"))
     const [indexImage, setIndexImage] = useState<number>(0)
-    
+
     const changedImageIndexHandler = (event: React.SyntheticEvent, newValue: number) => {
         setIndexImage(newValue);
     };

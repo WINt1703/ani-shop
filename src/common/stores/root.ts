@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import cartReducer from "../../module/shopify/slices/cart"
+import cartReducer from "../../modules/shopify/slices/cart"
 
 export default configureStore({
     middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),

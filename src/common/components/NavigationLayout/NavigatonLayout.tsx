@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {Badge, Drawer, Grid, IconButton, InputBase, Paper, Typography} from "@mui/material";
+import {Badge, Drawer, Grid, IconButton, InputBase, Paper} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Image from 'next/image';
 import Logo from '../../../../public/logo.svg';
 import {useSelector} from "react-redux";
-import {cartSelector} from "../../../module/shopify/slices/cart";
+import {cartSelector} from "../../../modules/shopify/slices/cart";
 import Link from "next/link"
 import CartMenu from "../CartMenu/CartMenu"
-import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 const NavigationLayout = ({ children }: any) => {
     const cart = useSelector(cartSelector)

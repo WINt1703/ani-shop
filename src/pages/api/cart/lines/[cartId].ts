@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {addCartLine, removeCartLines, updateCartLine} from "../../../../module/shopify/api/cart";
+import {addCartLine, removeCartLines, updateCartLine} from "../../../../modules/shopify/api/cart";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {

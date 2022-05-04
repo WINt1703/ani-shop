@@ -7,7 +7,7 @@ import Link from "next/link"
 import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 import Image from "next/image"
 import { LoadingButton } from '@mui/lab';
-import useCart from "../../../module/shopify/hook/useCart";
+import useCart from "../../../modules/shopify/hook/useCart";
 
 type ProductsInfoProps = {
     product: Product,

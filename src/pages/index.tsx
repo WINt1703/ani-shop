@@ -1,5 +1,5 @@
 import React from 'react';
-import {getProducts} from "../module/shopify/api/products";
+import {getProducts} from "../modules/shopify/api/products";
 import {NextPage} from "next";
 import {Grid, Theme, useMediaQuery} from "@mui/material";
 import ProductsInfo from "../common/components/ProductInfo/ProductInfo";
