@@ -6,10 +6,8 @@ import {CircularProgress, Grid, Tab, Tabs, Theme, Typography, useMediaQuery} fro
 import Image from "next/image"
 import styles from "../../../styles/product.module.css"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import {useDispatch, useSelector} from "react-redux";
-import {cartSelector, setCart} from "../../module/shopify/slices/cart";
-import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
-import {addProductOrCreateCart, updateLineOrCreateCart} from "../../common/utils/cart";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import useCart from "../../module/shopify/hook/useCart";
 
 type ProductProps = {
     product: Product
@@ -24,27 +22,16 @@ export async function getServerSideProps({ query }: NextPageContext) {
 }
 
 const Product: NextPage<ProductProps> = ({product}) => {
-    const dispatch = useDispatch()
-    const cart = useSelector(cartSelector)
-    const [isFetching, setIsFetching] = useState(false)
+    const { addToCart, isFetching } = useCart()
+    const md = useMediaQuery<Theme>(theme => theme.breakpoints.down("md"))
     const [indexImage, setIndexImage] = useState<number>(0)
-
+    
     const changedImageIndexHandler = (event: React.SyntheticEvent, newValue: number) => {
         setIndexImage(newValue);
     };
-    const addToCartHandler = async () => {
-        if (cart?.lines.edges.some(e => e.node.merchandise.product.id === product.id)) {
-            setIsFetching(true)
-            dispatch(setCart(await updateLineOrCreateCart({ product: product, quantity: 1 }, cart)))
-            setIsFetching(false)
-        }
-        else {
-            setIsFetching(true)
-            dispatch(setCart(await addProductOrCreateCart(product, cart)))
-            setIsFetching(false)
-        }
+    const addToCartHandler = () => {
+        addToCart(product).then()
     }
-    const md = useMediaQuery<Theme>(theme => theme.breakpoints.down("md"))
 
     return (
         <Grid m={3}>

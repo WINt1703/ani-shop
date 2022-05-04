@@ -1,35 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {NextPage} from "next";
 import {Grid, CircularProgress, Typography} from "@mui/material";
 import styles from "../../../../styles/ProductInfo.module.css"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Link from "next/link"
-import {useDispatch, useSelector} from "react-redux";
-import {Cart, Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
+import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 import Image from "next/image"
-import {cartSelector, setCart} from "../../../module/shopify/slices/cart";
-import {addProductOrCreateCart, updateLineOrCreateCart} from "../../utils/cart";
 import { LoadingButton } from '@mui/lab';
+import useCart from "../../../module/shopify/hook/useCart";
 
 type ProductsInfoProps = {
     product: Product,
 }
 
 const ProductsInfo: NextPage<ProductsInfoProps> = ({ product }) => {
-    const dispatch = useDispatch()
-    const cart = useSelector(cartSelector)
-    const [isFetching, setIsFetching] = useState<boolean>(false)
-    const addToCartHandler = async () => {
-        if (cart?.lines.edges.some(e => e.node.merchandise.product.id === product.id)) {
-            setIsFetching(true)
-            dispatch(setCart(await updateLineOrCreateCart({ product: product, quantity: 1 }, cart)))
-            setIsFetching(false)
-        }
-        else {
-            setIsFetching(true)
-            dispatch(setCart(await addProductOrCreateCart(product, cart)))
-            setIsFetching(false)
-        }
+    const { addToCart, isFetching } = useCart()
+    const addToCartHandler = () => {
+        addToCart(product).then()
     }
 
     return (
