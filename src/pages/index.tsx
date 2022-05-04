@@ -2,7 +2,7 @@ import React from 'react';
 import {getProducts} from "../module/shopify/api/products";
 import {NextPage} from "next";
 import {Grid, Theme, useMediaQuery} from "@mui/material";
-import ProductsInfo from "../common/components/ProductInfo";
+import ProductsInfo from "../common/components/ProductInfo/ProductInfo";
 import {Product} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 type HomeProps = {

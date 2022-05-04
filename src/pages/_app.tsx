@@ -3,7 +3,7 @@ import "../../styles/a.css"
 import "../../styles/text.css"
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../common/utils/theme";
-import NavigationLayout from "../common/components/NavigationLayout";
+import NavigationLayout from "../common/components/NavigationLayout/NavigatonLayout";
 import {Provider} from "react-redux";
 import rootStore from "../common/stores/root"
 

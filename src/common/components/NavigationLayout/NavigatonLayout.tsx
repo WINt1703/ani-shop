@@ -7,7 +7,7 @@ import Logo from '../../../../public/logo.svg';
 import {useSelector} from "react-redux";
 import {cartSelector} from "../../../module/shopify/slices/cart";
 import Link from "next/link"
-import CartMenu from "../CartMenu"
+import CartMenu from "../CartMenu/CartMenu"
 import {Cart} from "@shopify/hydrogen/dist/esnext/graphql/types/types";
 
 const NavigationLayout = ({ children }: any) => {
