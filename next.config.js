@@ -7,7 +7,6 @@ const nextConfig = {
     domains: ['cdn.shopify.com'],
   },
   assetPrefix: isProd ? "/ani-shop/" : "",
-  basePath: isProd ? "/ani-shop/" : "",
 }
 
 module.exports = nextConfig
