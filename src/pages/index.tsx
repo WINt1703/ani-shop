@@ -24,7 +24,7 @@ const Index: NextPage<HomeProps> = ({ products }) => {
     return (
         <SeoLayout>
             <Grid container
-                 alignItems={"center"}
+                 justifyContent={"center"}
                  flexWrap={"wrap"}>
                 {
                     products.map((p, i) => (
